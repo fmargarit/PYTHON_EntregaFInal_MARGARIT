@@ -1,0 +1,8 @@
+.producto-lista{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 30px;
+    column-gap: 30px;
+    justify-items: center;
+    margin: 30px;
+}

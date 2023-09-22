@@ -1,0 +1,85 @@
+   <!-- IMPORTANTE PARA LINKEAR FORMATO DE CSS-->
+       {% load static %}
+       <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+       <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+
+       
+   <!-- IMPORTANTE PARA LINKEAR FORMATO DE CSS-->
+   
+        {% include 'contacto/barra.html' %}
+   
+<header class="masthead">
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+               
+                    <!-- <h1 class="mx-auto my-0 text-uppercase">Entrega FINAL</h1> -->
+                   
+               
+            </div>
+        
+
+        <!-- Contact-->
+        <section class="contact-section bg-black">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5">
+
+                     <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-envelope text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Email</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50"><a href="mailto:fernando.margarit@gmail.com">fernando.margarit@gmail.com</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Phone</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50">+54 (11) 6450-0477</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fab fa-linkedin text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Linkedin</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50"><a href="https://www.linkedin.com/in/fernando-margarit/">www.linkedin.com/in/fernando-margarit/</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fab fa-github text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">GitHub</h4>
+                                <hr class="my-4 mx-auto" />
+                                <div class="small text-black-50"><a href="https://github.com/fmargarit?tab=repositories/">https://github.com/fmargarit/</a></div>
+                            </div>
+                        </div>
+                    </div>                    
+
+                </div>
+            </div>
+        </section>
+
+    </div>    
+</header>
+       
+
+        {% include 'pie.html' %}
