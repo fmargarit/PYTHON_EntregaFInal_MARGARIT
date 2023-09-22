@@ -30,7 +30,7 @@ urlpatterns = [
 #     path('producto/alta/', AltaProductoForm, name='ProductoAltaURL'),
 #     path('producto/busca/', BuscaProductoForm, name='ProductosBuscaURL'),
 #     path('producto/result/', BuscaProductoResultForm, name='ProductosBuscaResultURL'),
-      path('producto/lista/', ListaProductosForm, name='ProductosListaURL'),
+      path('producto/lista/<int:start>', ListaProductosForm, name='ProductosListaURL'),
     
     
 #     path('rubro/', rubros, name='RubrosURL'),

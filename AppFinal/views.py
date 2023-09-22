@@ -310,9 +310,36 @@ def LoginClienteForm(request):
 #     lista = Proveedor.objects.all()
 #     return render(request, 'proveedores/lista.html', {'lista_proveedores': lista})
 
-def ListaProductosForm(request):
-    lista  = Producto.objects.all()
-    return render(request, 'productos/lista.html', {'lista_productos': lista})
+def ListaProductosForm(request, start=1):
+    
+    
+    cantreg  = Producto.objects.all().count()
+    cantxpag = 3
+    if (cantreg % cantxpag) == 0:
+        maxpag   = (cantreg // cantxpag)
+    else:
+        maxpag   = (cantreg // cantxpag) + 1
+            
+    if request.GET.get('direction') == 'proximo':
+        if start < maxpag:
+            start +=1
+        
+    elif request.GET.get('direction') == 'anterior':
+        if start == 1:
+            start = 1
+        else:
+            start -=1
+                
+    inicio = (int(start)-1) * cantxpag 
+    final  = inicio + 3
+    lista  = Producto.objects.all()[inicio:final]
+    
+    print(f'cantidad de registros {cantreg}')
+    print(f'maximo de pag {maxpag}')
+    print(f'inicio {inicio}')
+    print(f'final {final}')
+    
+    return render(request, 'productos/lista.html', {'lista_productos': lista, "pagina": start})
 
 # def ListaRubrosForm(request):
 #     lista = RubroProd.objects.all()
