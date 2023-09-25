@@ -13,8 +13,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 # Create your views here.
 def inicio(request):
     try:
-        foto = Cliente.objects.get(usuario=request.user.id)
-        return render(request, "inicio/inicio.html", {"url": foto.avatar.url})
+        dato = Cliente.objects.get(usuario=request.user.id)
+        return render(request, "inicio/inicio.html", {"editaruser": dato.dni, "url": dato.avatar.url})
     except:    
         return render(request, "inicio/inicio.html")
 
@@ -152,7 +152,12 @@ def ListaProductosForm(request, start=1):
     final  = inicio + 3
     lista  = Producto.objects.all()[inicio:final]
     
-    return render(request, 'productos/lista.html', {'lista_productos': lista, "pagina": start})
+    try:
+        foto = Cliente.objects.get(usuario=request.user.id)
+        return render(request, "productos/lista.html", {"lista_productos": lista, "pagina": start, "url": foto.avatar.url})
+    except:  
+    
+        return render(request, 'productos/lista.html', {"lista_productos": lista, "pagina": start})
    
 # ----------------------------------------------------------------------------------------------------------------
 class DetalleProductoForm(DetailView):
