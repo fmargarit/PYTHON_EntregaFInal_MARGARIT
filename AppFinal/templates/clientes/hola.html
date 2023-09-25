@@ -25,34 +25,20 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
-       
+        <!-- Navigation-->
+            {% include 'clientes/barra.html' %}
 
+            
         <!-- Masthead-->
         <header class="masthead">
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-
-                 <!-- Navigation-->
-            {% include 'clientes/barra.html' %}
-
-
-                <form action="" method="POST">{% csrf_token %}
-
-                    <p class="text-white-50 mx-auto mt-2 mb-5">Inicio de Sesion</p>
-
-                    {% comment %} <p style="color: white; font-weight: bold;">Usuario<input     class="form-control" name="username"  type="text"      required placeholder="Ingrese Nuevo Usuario"   /> </p>
-                    <p style="color: white; font-weight: bold;">Contraseña<input  class="form-control" name="password1" type="password"  required placeholder="Ingrese Contraseña"      /> </p> {% endcomment %}
-                    
-                    {{ LoginForm.as_p }}
-
-                    <button class="btn btn-primary" id="submitButton" type="submit"">Ingresar</button>   
-                           
-                </form>
-
-            <div class="d-flex justify-content-center">
-                   
-                      
-              
-          
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">{{mensaje}}</h2>
+                         <h3 style="color: white; font-size: xx-large;">Bienvenido al MarketPlace</h3>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <!-- Contact -->

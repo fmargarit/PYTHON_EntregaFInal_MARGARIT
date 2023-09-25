@@ -1,7 +1,9 @@
-from django.shortcuts          import render
+from django.shortcuts            import render
 #from django.http               import HttpResponse
-from django.core.files.storage import default_storage
-from django.contrib.auth       import authenticate, login
+from django.core.files.storage   import default_storage
+from django.contrib.auth         import authenticate, login
+from django.views.generic.detail import DetailView
+from django.views.generic.edit   import UpdateView
 
 from AppFinal.models  import *
 from AppFinal.forms   import *
@@ -10,10 +12,17 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Create your views here.
 def inicio(request):
-    return render(request, "inicio/inicio.html",)
+    try:
+        foto = Cliente.objects.get(usuario=request.user.id)
+        return render(request, "inicio/inicio.html", {"url": foto.avatar.url})
+    except:    
+        return render(request, "inicio/inicio.html")
 
 def contacto(request):
     return render(request, "contacto/contacto.html",)
+
+# def hola(request):
+#     return render(request, "contacto/hola.html",)
 
 # def clientes(request):
 #     return render(request, "clientes/inicio.html",)
@@ -72,7 +81,7 @@ def AltaClienteForm(request):
                             usuario=usuario
                             )
             client.save()
-            return render(request, "clientes/bienvenido.html",{"mensaje": f'Usuario Registrado con exito.       Ingrese al sistema'})  
+            return render(request, "clientes/bienvenido.html",{"mensaje1": f'Usuario Registrado con exito', "mensaje2": f'Ingrese al sistema'})  
             
         else:
                         
@@ -92,34 +101,86 @@ def LoginClienteForm(request):
         loginform = AuthenticationForm(request, data=request.POST)
         
         if loginform.is_valid():
-            data = loginform.cleaned_data
-            user = data['username']
-            psw  = data['password1']
-            
+            data   = loginform.cleaned_data
+            user   = data['username']
+            psw    = data['password']
+                        
             userok = authenticate(username=user, password=psw)
+            
+            editar = Cliente.objects.get(usuario=userok)
             
             if userok:
                 login(request, userok)
-                return render(request, "clientes/bienvenido.html",{"mensaje": f'Bienvenido/a {userok}'})  
+                
+                return render(request, "clientes/hola.html",{"mensaje": f'Bienvenido/a {editar.nombre}', "paraeditar": editar.dni})  
             else:
-                return render(request, "clientes/bienvenido.html",{"mensaje": f'Login Incorrecto'})  
+                return render(request, "clientes/hola.html",{"mensaje": f'Login Incorrecto'})  
         else:    
             
             print(loginform.has_error('username'))
             print(loginform.has_error('password'))
-           
             print(loginform.is_valid())
+            #print(userok)
             
-            return render(request, "clientes/bienvenido.html",{"mensaje": f'Algo Incorrecto'})  
+            editar = Cliente.objects.get(usuario=userok)
+            return render(request, "clientes/bienvenido.html",{"mensaje": f'Algo Incorrecto', "saludo": editar.nombre})  
     else:
         loginform = AuthenticationForm()
         return render(request, "clientes/login.html", {'LoginForm': loginform})
 
 # ----------------------------------------------------------------------------------------------------------------
+def ListaProductosForm(request, start=1):
+        
+    cantreg  = Producto.objects.all().count()
+    cantxpag = 3
+    if (cantreg % cantxpag) == 0:
+        maxpag   = (cantreg // cantxpag)
+    else:
+        maxpag   = (cantreg // cantxpag) + 1
+            
+    if request.GET.get('direction') == 'proximo':
+        if start < maxpag:
+            start +=1
+        
+    elif request.GET.get('direction') == 'anterior':
+        if start == 1:
+            start = 1
+        else:
+            start -=1
+                
+    inicio = (int(start)-1) * cantxpag 
+    final  = inicio + 3
+    lista  = Producto.objects.all()[inicio:final]
+    
+    return render(request, 'productos/lista.html', {'lista_productos': lista, "pagina": start})
+   
+# ----------------------------------------------------------------------------------------------------------------
+class DetalleProductoForm(DetailView):
+    model               = Producto
+    template_name       = 'productos/detalle.html'
+    context_object_name = 'detalle'
+
+class Hola(DetailView):
+    model               = User
+    template_name       = 'clientes/hola.html'
+    context_object_name = 'hola'
+    
+class ClienteUpdateView(UpdateView):
+    model               = Cliente
+    template_name       = 'clientes/editar.html'        
+    fields              = ('nombre','apellido','dni','fnac','email','avatar','domicilio','provincia')
+    success_url         = '/entregable/'
+    context_object_name = 'edit'
 
 
+# def DetalleProductoForm(request):
+#     detalle = Producto.objects.get(request)
+#     return render(request, 'producto/detalle.html', {'detalle_productos': detalle})    
 
 
+# def ListaPedidosForm(request):
+#     lista = OrdenCompra.objects.all()
+#     return render(request, 'pedidos/lista.html', {'lista_pedidos': lista})
 
 
 
@@ -291,15 +352,6 @@ def LoginClienteForm(request):
 
 
 
-
-
-
-
-
-
-
-
-
 # ## -- LISTADOS -- ##
 
 # def ListaClientesForm(request):
@@ -309,42 +361,3 @@ def LoginClienteForm(request):
 # def ListaProveedoresForm(request):
 #     lista = Proveedor.objects.all()
 #     return render(request, 'proveedores/lista.html', {'lista_proveedores': lista})
-
-def ListaProductosForm(request, start=1):
-    
-    
-    cantreg  = Producto.objects.all().count()
-    cantxpag = 3
-    if (cantreg % cantxpag) == 0:
-        maxpag   = (cantreg // cantxpag)
-    else:
-        maxpag   = (cantreg // cantxpag) + 1
-            
-    if request.GET.get('direction') == 'proximo':
-        if start < maxpag:
-            start +=1
-        
-    elif request.GET.get('direction') == 'anterior':
-        if start == 1:
-            start = 1
-        else:
-            start -=1
-                
-    inicio = (int(start)-1) * cantxpag 
-    final  = inicio + 3
-    lista  = Producto.objects.all()[inicio:final]
-    
-    print(f'cantidad de registros {cantreg}')
-    print(f'maximo de pag {maxpag}')
-    print(f'inicio {inicio}')
-    print(f'final {final}')
-    
-    return render(request, 'productos/lista.html', {'lista_productos': lista, "pagina": start})
-
-# def ListaRubrosForm(request):
-#     lista = RubroProd.objects.all()
-#     return render(request, 'rubros/lista.html', {'lista_rubros': lista})
-
-# def ListaPedidosForm(request):
-#     lista = OrdenCompra.objects.all()
-#     return render(request, 'pedidos/lista.html', {'lista_pedidos': lista})

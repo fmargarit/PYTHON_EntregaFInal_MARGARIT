@@ -10,10 +10,17 @@ urlpatterns = [
     
     path('contacto', contacto, name='ContactoURL'),
     
-    path('clientes/alta/', AltaClienteForm, name='ClientesAltaURL'),
-    path('clientes/login', LoginClienteForm, name='ClientesLoginURL'),
-    path('clientes/logout', LogoutView.as_view(template_name='clientes/inicio.html'), name='ClientesLogoutURL'),
+    path('clientes/alta/',       AltaClienteForm,  name='ClientesAltaURL'),
+    path('clientes/login',       LoginClienteForm, name='ClientesLoginURL'),
+    #path('clientes/hola/<pk>',   Hola.as_view(template_name='clientes/hola.html'), name='HolaURL'),
+    path('clientes/editar/<pk>', ClienteUpdateView.as_view(), name='ClientesEditarURL'),
+    path('clientes/logout/',     LogoutView.as_view(template_name='inicio/inicio.html'), name='ClientesLogoutURL'),
 
+    path('producto/detalle/<pk>', DetalleProductoForm.as_view(), name='ProductosDetalleURL'),
+    path('producto/lista/<int:start>', ListaProductosForm, name='ProductosListaURL'),
+    
+    
+    
 #     path('clientes/busca/', BuscaClienteForm, name='ClientesBuscaURL'),
 #     path('clientes/result/', BuscaClienteResultForm, name='ClientesBuscaResultURL'),
 #     path('clientes/lista/', ListaClientesForm, name='ClientesListaURL'),
@@ -29,10 +36,7 @@ urlpatterns = [
 #     path('producto/', productos, name='ProductosURL'),
 #     path('producto/alta/', AltaProductoForm, name='ProductoAltaURL'),
 #     path('producto/busca/', BuscaProductoForm, name='ProductosBuscaURL'),
-#     path('producto/result/', BuscaProductoResultForm, name='ProductosBuscaResultURL'),
-      path('producto/lista/<int:start>', ListaProductosForm, name='ProductosListaURL'),
-    
-    
+      
 #     path('rubro/', rubros, name='RubrosURL'),
 #     path('rubro/alta/', AltaRubroForm, name='RubroAltaURL'),
 #     path('rubro/lista/', ListaRubrosForm, name='RubrosListaURL'),

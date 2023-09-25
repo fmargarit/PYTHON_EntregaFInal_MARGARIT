@@ -23,14 +23,14 @@
                 <section class="producto-lista">
                     {% for produ in lista_productos %}
 
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 25rem;">
                             
-                            <img src="{{produ.foto}}" class="card-img-top" alt="">
+                            <img src="{{produ.foto.url}}" class="card-img-top" alt="">
                             <div class="card-body">
                             <h5 class="card-title">{{produ.nombre}}</h5>
                             <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;" class="card-text">{{produ.rubro}}</h2>
                             <p class="card-text">{{produ.marca}}</p>
-                            <a href="" class="btn btn-primary">Detalles</a>
+                            <a href="{% url 'ProductosDetalleURL' produ.id %}" class="btn btn-primary">Detalle</a>
                             </div>
                         </div>
 

@@ -2,7 +2,19 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     row-gap: 30px;
-    column-gap: 30px;
+    column-gap: 60px;
     justify-items: center;
-    margin: 30px;
+    margin: 35px;
+    /* background-color: rgb(90 97 97); */
+}
+
+.producto-detalle{
+    display: grid;
+    grid-template-columns: 1fr;
+
+}
+
+.cliente-editar{
+    display: inline-block;
+    box-sizing: content-box;
 }
