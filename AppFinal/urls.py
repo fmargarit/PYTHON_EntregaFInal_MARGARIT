@@ -19,7 +19,11 @@ urlpatterns = [
     path('producto/detalle/<pk>', DetalleProductoForm.as_view(), name='ProductosDetalleURL'),
     path('producto/lista/<int:start>', ListaProductosForm, name='ProductosListaURL'),
     
-    
+    path('vendedores/inicio/',     iniciovendedor,    name='VendedoresInicioURL'),
+    path('vendedores/alta/',       AltaVendedorForm,  name='VendedoresAltaURL'),
+    path('vendedores/login',       LoginVendedorForm, name='VendedoresLoginURL'),
+    path('vendedores/logout/',     LogoutView.as_view(template_name='vendedores/inicio.html'), name='VendedoresLogoutURL'),
+
     
 #     path('clientes/busca/', BuscaClienteForm, name='ClientesBuscaURL'),
 #     path('clientes/result/', BuscaClienteResultForm, name='ClientesBuscaResultURL'),

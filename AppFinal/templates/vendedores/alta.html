@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Tercer Entregable - MARGARIT</title>
+        <title>Entrega FINAL -- MARGARIT</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -25,37 +25,46 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
-        <!-- Navigation-->
-            {% include 'proveedores/barra.html' %}
+       
 
         <!-- Masthead-->
         <header class="masthead">
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
 
-                
+                 <!-- Navigation-->
+            {% include 'clientes/barra.html' %}
 
 
-                <form action="{% url 'ProveedorAltaURL' %}" method="POST">{% csrf_token %}
-                    <h1 class="mx-auto my-0 text-uppercase">Alta Proveedores</h1>
+                <form action="{% url 'VendedoresAltaURL' %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+                    <p class="text-white-50 mx-auto mt-2 mb-5">Registro de Nuevo Vendedor</p>
 
-                    <p style="color: white; font-weight: bold;">Nombre   :<input class="form-control" name="nombre"   type="text"   placeholder="Ingrese Nombre Empresa"                data-sb-validations="required,text"   /> </p>
-                    <p style="color: white; font-weight: bold;">Contacto :<input class="form-control" name="contacto" type="text"   placeholder="Ingrese Nombre y Apellido"             data-sb-validations="required,text"   /> </p>
-                    <p style="color: white; font-weight: bold;">Email    :<input class="form-control" name="email"    type="email"  placeholder="Ingrese direccion de email de Contacto (ej. nombre@mail.com)"   data-sb-validations="required,email"  /> </p>
-                    <p style="color: white; font-weight: bold;">CUIT      :<input class="form-control" name="cuit"    type="number" placeholder="Ingrese numero de CUIT"                 data-sb-validations="required,number" /> </p>
-                     
+                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="username"  type="text"      required placeholder="Ingrese Nuevo Usuario"        /> </p>
+                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="password1" type="password"  required placeholder="Ingrese Contraseña"           /> </p>
+                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="password2" type="password"  required placeholder="Confirmacion Contraseña"      /> </p>
+                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="nombre"    type="text"      required placeholder="Ingrese su Nombre"            /> </p>
+                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="cuit"      type="number"    required placeholder="Ingrese su numero de DNI"     /> </p>
+                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="email"     type="email"     required placeholder="Ingrese su correo electronico (ej. nombre@mail.com)" /> </p>
+                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="domicilio" type="text"      required placeholder="Ingrese su Domicilio"          /> </p>
+                    
+                    <p style="color: white; font-weight: bold;">
+                        <select class="form-select"  name="provincia">
+                            <option selected>Seleccione la Provincia de su Domicilio
+                                {% for prov in Pcia %}
+                                    <option value="{{prov.provincia}}">{{prov.provincia}}</option>        
+                                {% endfor %}
+                            </option>   
+                        </select>
+                    </p> 
+
+                    <!-- <p style="color: white; font-weight: bold;">{{ NewUser.as_p }} </p> -->
+
                     <button class="btn btn-primary" id="submitButton" type="submit"">Enviar</button>            
                 </form>
 
             <div class="d-flex justify-content-center">
-                    <div class="text-center">
-                      
-              
+               
           
         </header>
-
-            
-
-            
 
         <!-- Contact -->
              {% comment %} {% include 'contacto.html' %} {% endcomment %}

@@ -4219,7 +4219,7 @@ textarea.form-control-lg {
   --bs-card-spacer-y: 0rem;
   --bs-card-spacer-x: 6rem;
   --bs-card-title-spacer-y: 0.5rem;
-  --bs-card-border-width: 1px;
+  --bs-card-border-width: 2px;
   --bs-card-border-color: var(
   --bs-border-color-translucent);
   --bs-card-border-radius: 2.375rem;
@@ -11170,7 +11170,7 @@ body {
 }
 
 .contact-section {
-  padding-top: 10rem;
+  padding-top: 5rem;
 }
 .contact-section .card {
   border: 0;

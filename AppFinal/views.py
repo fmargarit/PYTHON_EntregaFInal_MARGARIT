@@ -21,6 +21,9 @@ def inicio(request):
 def contacto(request):
     return render(request, "contacto/contacto.html",)
 
+def iniciovendedor(request):
+    return render(request, "vendedores/inicio.html",)
+
 # def hola(request):
 #     return render(request, "contacto/hola.html",)
 
@@ -177,6 +180,89 @@ class ClienteUpdateView(UpdateView):
     success_url         = '/entregable/'
     context_object_name = 'edit'
 
+# ----------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------
+def AltaVendedorForm(request):
+    if request.method == 'POST':
+        
+        nuevoVendedor = AltaCliente({
+                                "nombre": request.POST['nombre'],
+                                "dni": request.POST['dni'],
+                                "email": request.POST['email'],
+                                "domicilio": request.POST['domicilio'],
+                                "provincia": request.POST['provincia'],
+                                })
+
+        nuevoUsuario = UserCreationForm({
+                                "username": request.POST["username"],
+                                "password1": request.POST["password1"],
+                                "password2": request.POST["password2"]
+                                })
+                
+        if nuevoVendedor.is_valid() and nuevoUsuario.is_valid():
+            
+            data = nuevoVendedor.cleaned_data
+            data.update(nuevoUsuario.cleaned_data)
+            
+            usuario = User(username=data['username'])
+            usuario.set_password(data['password1'])
+            usuario.save()
+            
+            vended = Vendedor(nombre=data['nombre'],
+                            cuit=data['cuit'],
+                            email=data['email'],
+                            domicilio=data['domicilio'],
+                            provincia=data['provincia'],
+                            usuario=usuario
+                            )
+            vended.save()
+            return render(request, "vendedores/bienvenido.html",{"mensaje1": f'Vendedor Registrado con exito', "mensaje2": f'Ingrese al sistema'})  
+            
+        else:
+                        
+            return render(request, "vendedores/bienvenido.html",{"mensaje": "Formulario Invalido"})  
+    
+    else:
+        nuevoCliente = Cliente()
+        nuevoUsuario = UserCreationForm()
+        provincias   = Provincia.objects.all()
+    #return render(request, "clientes/alta.html")  
+    #return render(request, "clientes/alta.html",{"NewClient": nuevoCliente, "NewUser": nuevoUsuario})  
+    return render(request, "clientes/alta.html",{"Pcia": provincias})  
+
+# ----------------------------------------------------------------------------------------------------------------
+def LoginVendedorForm(request):
+    if request.method == 'POST':
+        loginform = AuthenticationForm(request, data=request.POST)
+        
+        if loginform.is_valid():
+            data   = loginform.cleaned_data
+            user   = data['username']
+            psw    = data['password']
+                        
+            userok = authenticate(username=user, password=psw)
+            
+            editar = Vendedor.objects.get(usuario=userok)
+            
+            if userok:
+                login(request, userok)
+                
+                return render(request, "clientes/hola.html",{"mensaje": f'Bienvenido/a {editar.nombre}', "paraeditar": editar.cuit})  
+            else:
+                return render(request, "clientes/hola.html",{"mensaje": f'Login Incorrecto'})  
+        else:    
+            
+            print(loginform.has_error('username'))
+            print(loginform.has_error('password'))
+            print(loginform.is_valid())
+            #print(userok)
+            
+            editar = Vendedor.objects.get(usuario=userok)
+            return render(request, "clientes/bienvenido.html",{"mensaje": f'Algo Incorrecto', "saludo": editar.nombre})  
+    else:
+        loginform = AuthenticationForm()
+        return render(request, "clientes/login.html", {'LoginForm': loginform})
 
 # def DetalleProductoForm(request):
 #     detalle = Producto.objects.get(request)

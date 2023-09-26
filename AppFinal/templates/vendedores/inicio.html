@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Tercer Entregable - MARGARIT</title>
+        <title>Entrega FINAL -- MARGARIT</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -26,20 +26,11 @@
     </head>
     <body id="page-top">
         <!-- Navigation-->
-            {% include 'proveedores/barra.html' %}
+            {% include 'vendedores/barra.html' %}
 
-            
         <!-- Masthead-->
-            {% include 'proveedores/fondo.html' %}
+            {% include 'vendedores/fondo.html' %}
 
-            {% block ContenidoQueCambia %}
-                    <h1>{{mensaje}}</h1>
-            {% endblock ContenidoQueCambia %}
-
-
-        <!-- Contact -->
-             {% comment %} {% include 'contacto.html' %} {% endcomment %}
- 
         <!-- Footer -->
             {% include 'pie.html' %}
      

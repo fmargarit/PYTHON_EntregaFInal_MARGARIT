@@ -70,3 +70,18 @@ class OrdenCompra(models.Model):
     class Meta():
         verbose_name = 'ORDEN COMPRA'
         verbose_name_plural = 'ORDENES COMPRA'
+
+#-------------------------------------------------------------------------------------
+class Vendedor(models.Model):
+    nombre   = models.CharField(max_length=30)
+    cuit     = models.IntegerField(primary_key=True)
+    email    = models.EmailField(null=False)
+    usuario  = models.OneToOneField(User, on_delete=models.CASCADE)
+    domicilio= models.CharField(max_length=150)
+    provincia= models.ForeignKey(Provincia, on_delete=models.DO_NOTHING)
+    cliente  = models.BooleanField(default=False)
+    def __str__(self):
+        return f'{self.nombre}'
+    class Meta():
+        verbose_name = 'VENDEDOR'
+        verbose_name_plural = 'VENDEDOR'

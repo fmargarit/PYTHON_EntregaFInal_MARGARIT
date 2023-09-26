@@ -1,0 +1,35 @@
+       <!-- IMPORTANTE PARA LINKEAR FORMATO DE CSS-->
+       {% load static %}
+       <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+   <!-- IMPORTANTE PARA LINKEAR FORMATO DE CSS-->
+  
+  
+  <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container px-4 px-lg-5">
+       
+        {% if user.is_authenticated %}
+                
+            {% if url %}
+              <img src='{{url}}' height='50px' alt='avatar'>
+            {% endif %}     
+                     
+            <p style="font-family:monospace; color:blue; font-size:larger; font-style: italic;">Hola Vendedor {{user.username}}</p>
+
+            <a class="navbar-brand" href="{% url 'VendedoresAltaURLEditarURL' editaruser %}">Editar vendedores/fondo.html</a>  
+
+            <a class="navbar-brand" href="{% url 'VendedoresLogoutURL' %}">Logout</a>
+
+        {% else %}
+        
+            <a class="navbar-brand" href="{% url 'InicioURL' %}">Volver</a>    
+        
+            <a class="navbar-brand" href="{% url 'VendedoresLoginURL' %}">Iniciar Sesion</a>
+       
+            <a class="navbar-brand" href="{% url 'VendedoresAltaURL' %}">Registrar Vendedor</a>
+                 
+         {% endif %}  
+           
+         
+        </div>
+    </nav>
