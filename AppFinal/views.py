@@ -35,7 +35,7 @@ def iniciovendedor(request):
 def AltaClienteForm(request):
     if request.method == 'POST':
         avatar = request.FILES.get('avatar')
-        avatar_path = default_storage.save('fotos/clientes'+avatar.name, avatar)
+        avatar_path = default_storage.save('fotos/clientes/'+avatar.name, avatar)
         nuevoCliente = AltaCliente({
                                 "nombre": request.POST['nombre'],
                                 "apellido": request.POST['apellido'],
@@ -83,8 +83,6 @@ def AltaClienteForm(request):
         nuevoCliente = Cliente()
         nuevoUsuario = UserCreationForm()
         provincias   = Provincia.objects.all()
-    #return render(request, "clientes/alta.html")  
-    #return render(request, "clientes/alta.html",{"NewClient": nuevoCliente, "NewUser": nuevoUsuario})  
     return render(request, "clientes/alta.html",{"Pcia": provincias})  
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -108,12 +106,7 @@ def LoginClienteForm(request):
             else:
                 return render(request, "clientes/hola.html",{"mensaje": f'Login Incorrecto'})  
         else:    
-            
-            print(loginform.has_error('username'))
-            print(loginform.has_error('password'))
-            print(loginform.is_valid())
-            #print(userok)
-            
+                        
             editar = Cliente.objects.get(usuario=userok)
             return render(request, "clientes/bienvenido.html",{"mensaje": f'Algo Incorrecto', "saludo": editar.nombre})  
     else:
@@ -262,7 +255,7 @@ def LoginVendedorForm(request):
 def AltaProductoForm(request):
     if request.method == 'POST':
         imagen = request.FILES.get('foto')
-        imagen_path = default_storage.save('fotos/productos'+imagen.name, imagen)  
+        imagen_path = default_storage.save('fotos/productos/'+imagen.name, imagen)  
         nuevoProducto = AltaProducto({
                                 "marca":   request.POST['marca'],
                                 "rubro":   request.POST['rubro'],
@@ -289,6 +282,10 @@ def AltaProductoForm(request):
             
             return render(request, "productos/bienvenido.html",{"mensaje": f'Producto Registrado con exito'})  
         else:
+            
+            # print(nuevoProducto.is_valid())
+            # print(nuevoProducto.has_error('nombre'))
+            
             return render(request, "productos/bienvenido.html",{"mensaje": "Formulario Invalido"})  
     else:
         nuevoProducto = Producto()

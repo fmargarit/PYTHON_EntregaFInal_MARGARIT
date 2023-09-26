@@ -15,7 +15,7 @@ class AltaVendedor(forms.ModelForm):
 class AltaProducto(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ('rubro','marca','nombre','precio','stock','foto','detalle')
+        fields = ('rubro','marca','nombre','precio','stock','detalle', 'foto')
  
  # class AltaCliente(forms.Form):
 #     nombre   = forms.CharField(required=True)

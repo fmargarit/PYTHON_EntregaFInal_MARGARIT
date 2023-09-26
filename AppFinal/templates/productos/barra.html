@@ -16,13 +16,11 @@
                   {% endif %}     
 
                   <p style="font-family:monospace; color:blue; font-size:larger; font-style: italic;">Hola Usuario {{user.username}}</p>
-                  <a class="navbar-brand" href="{% url 'ClientesLogoutURL' %}">Logout</a>
+                  <a class="navbar-brand" href="{% url 'VendedoresLogoutURL' %}">Logout</a>
 
               {% else %}
-                  <a class="navbar-brand" href="{% url 'ClientesLoginURL' %}">Login</a>
+                  <a class="navbar-brand" href="{% url 'VendedoresLoginURL' %}">Login</a>
               {% endif %}
-
-            <a class="navbar-brand" href="{% url 'InicioURL' %}">Inicio</a>
             
             <a class="navbar-brand" href="{% url 'VendedoresInicioURL' %}">Area Vendedores</a>
            
