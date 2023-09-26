@@ -32,51 +32,42 @@
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
 
                  <!-- Navigation-->
-            {% include 'clientes/barra.html' %}
+            {% include 'productos/barra.html' %}
 
 
-            <form action="{% url 'ClientesAltaURL' %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+            <form action="{% url 'ProductosAltaURL' %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
                 <p class="text-white-50 mx-auto mt-2 mb-5">Registro Nuevo Producto</p>
 
                     <p style="color: white; font-weight: bold;">Rubro:
                         <select class="form-select"  name="rubro">
                             <option selected>Seleccione Rubro del Producto
-                                {% for rubro in rubros %}
-                                    <option value="{{rubro.nombre}}">{{rubro.nombre}}</option>        
+                                {% for rubro in Rubr %}
+                                    <option value="{{rubro.rubro}}">{{rubro.rubro}}</option>        
                                 {% endfor %}
                             </option>   
                         </select>
                     </p> 
 
                     <p style="color: white; font-weight: bold;">Marca:
-                        <select class="form-select"  name="rubro">
+                        <select class="form-select"  name="marca">
                             <option selected>Seleccione Marca del Producto
-                                {% for marca in marcas %}
-                                    <option value="{{marca.nombre}}">{{marca.nombre}}</option>        
+                                {% for marca in Marc %}
+                                    <option value="{{marca.marca}}">{{marca.marca}}</option>        
                                 {% endfor %}
                             </option>   
                         </select>
                     </p>
 
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="nombre"  type="text"    required placeholder="Ingrese nombre del Producto" />Nombre: </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="precio"  type="number"  required placeholder="Ingrese precio del Producto" />Precio: </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="stock"   type="number"  required placeholder="Ingrese stock del Producto"  />Stock: </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="foto"    type="file"    id="formFile"  />Imagen: </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="detalle" type="text"    required placeholder="Ingrese su Domicilio"        />Detalle: </p>
-
-
-
-
-
-                    <!-- <p style="color: white; font-weight: bold;">{{ NewUser.as_p }} </p> -->
+                    <p style="color: white; font-weight: bold;">Nombre:  <input  class="form-control" name="nombre"  type="text"    required placeholder="Ingrese nombre del Producto" /></p>
+                    <p style="color: white; font-weight: bold;">Precio:  <input  class="form-control" name="precio"  type="number"  required placeholder="Ingrese precio del Producto" /></p>
+                    <p style="color: white; font-weight: bold;">Stock:   <input  class="form-control" name="stock"   type="number"  required placeholder="Ingrese stock del Producto"  /></p>
+                    <p style="color: white; font-weight: bold;">Detalle: <input  class="form-control" name="detalle" type="text"    required placeholder="Ingrese su Domicilio"        /></p>
+                    <p style="color: white; font-weight: bold;">Imagen:  <input  class="form-control" name="foto"    type="file"    id="formFile"  /></p>
 
                     <button class="btn btn-primary" id="submitButton" type="submit"">Enviar</button>            
                 </form>
 
             <div class="d-flex justify-content-center">
-                   
-                      
-              
           
         </header>
 

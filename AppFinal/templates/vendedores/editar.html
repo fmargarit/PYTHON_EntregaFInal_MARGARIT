@@ -2,6 +2,7 @@
 <!-- IMPORTANTE PARA LINKEAR FORMATO DE CSS-->
 {% load static %}
 <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+<link href="{% static 'css/mystyles.css' %}" rel="stylesheet" />
 <!-- IMPORTANTE PARA LINKEAR FORMATO DE CSS-->
 
 
@@ -32,37 +33,22 @@
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
 
                  <!-- Navigation-->
-            {% include 'vendedores/barra.html' %}
+            {% include 'vendedores/barra-editar.html' %}
 
 
-                <form action="{% url 'VendedoresAltaURL' %}" method="POST">{% csrf_token %}
-                    <p class="text-white-50 mx-auto mt-2 mb-5">Registro de Nuevo Vendedor</p>
-
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="username"  type="text"      required placeholder="Ingrese Nuevo Usuario"        /> </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="password1" type="password"  required placeholder="Ingrese Contraseña"           /> </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="password2" type="password"  required placeholder="Confirmacion Contraseña"      /> </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="nombre"    type="text"      required placeholder="Ingrese Nombre Empresa"            /> </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="cuit"      type="number"    required placeholder="Ingrese numero de CUIT"     /> </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="email"     type="email"     required placeholder="Ingrese correo electronico (ej. nombre@mail.com)" /> </p>
-                    <p style="color: white; font-weight: bold;"><input  class="form-control" name="domicilio" type="text"      required placeholder="Ingrese Domicilio"          /> </p>
-                    
-                    <p style="color: white; font-weight: bold;">
-                        <select class="form-select"  name="provincia">
-                            <option selected>Seleccione la Provincia de su Domicilio
-                                {% for prov in Pcia %}
-                                    <option value="{{prov.provincia}}">{{prov.provincia}}</option>        
-                                {% endfor %}
-                            </option>   
-                        </select>
-                    </p> 
-
-                    <!-- <p style="color: white; font-weight: bold;">{{ NewUser.as_p }} </p> -->
-
-                    <button class="btn btn-primary" id="submitButton" type="submit"">Enviar</button>            
+                <form action="" method="POST">{% csrf_token %}
+                    <p class="text-white-50 mx-auto mt-2 mb-5">Editar Registro de Vendedor</p>
+                
+                <section class="vendedor-editar">
+                        {{form.as_p}}
+                </section>
+                    <button name="d"  class="btn btn-primary" id="submitButton" type="submit">Enviar</button>            
                 </form>
 
             <div class="d-flex justify-content-center">
-               
+                   
+                      
+              
           
         </header>
 

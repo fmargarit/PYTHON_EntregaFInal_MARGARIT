@@ -11,6 +11,7 @@ from AppFinal.forms   import *
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Create your views here.
+# ----------------------------------------------------------------------------------------------------------------
 def inicio(request):
     try:
         dato = Cliente.objects.get(usuario=request.user.id)
@@ -18,31 +19,19 @@ def inicio(request):
     except:    
         return render(request, "inicio/inicio.html")
 
+# ----------------------------------------------------------------------------------------------------------------
 def contacto(request):
     return render(request, "contacto/contacto.html",)
 
+# ----------------------------------------------------------------------------------------------------------------
 def iniciovendedor(request):
-    return render(request, "vendedores/inicio.html",)
+    try:
+        dato = Vendedor.objects.get(usuario=request.user.id)
+        return render(request, "vendedores/inicio.html", {"editarvendedor": dato.cuit})
+    except:    
+        return render(request, "vendedores/inicio.html",)
 
-# def hola(request):
-#     return render(request, "contacto/hola.html",)
-
-# def clientes(request):
-#     return render(request, "clientes/inicio.html",)
-
-# def proveedores(request):
-#     return render(request, "proveedores/inicio.html",)
-
-# def productos(request):
-#     return render(request, "productos/inicio.html",)
-
-# def rubros(request):
-#     return render(request, "rubros/inicio.html",)
-
-# def pedidos(request):
-#     return render(request, "pedidos/inicio.html",)
-
-#  ---- CLIENTES ---- 
+# ----------------------------------------------------------------------------------------------------------------
 def AltaClienteForm(request):
     if request.method == 'POST':
         avatar = request.FILES.get('avatar')
@@ -179,16 +168,22 @@ class ClienteUpdateView(UpdateView):
     fields              = ('nombre','apellido','dni','fnac','email','avatar','domicilio','provincia')
     success_url         = '/entregable/'
     context_object_name = 'edit'
+    
+class VendedorUpdateView(UpdateView):
+    model               = Vendedor
+    template_name       = 'vendedores/editar.html'        
+    fields              = ('nombre','cuit','email','domicilio','provincia')
+    success_url         = '/entregable/vendedores/inicio'
+    context_object_name = 'edit'
 
 # ----------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------
 def AltaVendedorForm(request):
     if request.method == 'POST':
-        
-        nuevoVendedor = AltaCliente({
+        nuevoVendedor = AltaVendedor({
                                 "nombre": request.POST['nombre'],
-                                "dni": request.POST['dni'],
+                                "cuit": request.POST['cuit'],
                                 "email": request.POST['email'],
                                 "domicilio": request.POST['domicilio'],
                                 "provincia": request.POST['provincia'],
@@ -224,12 +219,11 @@ def AltaVendedorForm(request):
             return render(request, "vendedores/bienvenido.html",{"mensaje": "Formulario Invalido"})  
     
     else:
-        nuevoCliente = Cliente()
-        nuevoUsuario = UserCreationForm()
-        provincias   = Provincia.objects.all()
-    #return render(request, "clientes/alta.html")  
-    #return render(request, "clientes/alta.html",{"NewClient": nuevoCliente, "NewUser": nuevoUsuario})  
-    return render(request, "clientes/alta.html",{"Pcia": provincias})  
+        nuevoVendedor = Vendedor()
+        nuevoUsuario  = UserCreationForm()
+        provincias    = Provincia.objects.all()
+    
+    return render(request, "vendedores/alta.html",{"Pcia": provincias})  
 
 # ----------------------------------------------------------------------------------------------------------------
 def LoginVendedorForm(request):
@@ -248,21 +242,63 @@ def LoginVendedorForm(request):
             if userok:
                 login(request, userok)
                 
-                return render(request, "clientes/hola.html",{"mensaje": f'Bienvenido/a {editar.nombre}', "paraeditar": editar.cuit})  
+                return render(request, "vendedores/hola.html",{"mensaje": f'Bienvenido/a {editar.nombre}', "editarvendedor": editar.cuit})  
             else:
-                return render(request, "clientes/hola.html",{"mensaje": f'Login Incorrecto'})  
+                return render(request, "vendedores/hola.html",{"mensaje": f'Login Incorrecto'})  
         else:    
             
             print(loginform.has_error('username'))
             print(loginform.has_error('password'))
             print(loginform.is_valid())
-            #print(userok)
+            
             
             editar = Vendedor.objects.get(usuario=userok)
-            return render(request, "clientes/bienvenido.html",{"mensaje": f'Algo Incorrecto', "saludo": editar.nombre})  
+            return render(request, "vendedores/bienvenido.html",{"mensaje": f'Algo Incorrecto', "saludo": editar.nombre})  
     else:
         loginform = AuthenticationForm()
-        return render(request, "clientes/login.html", {'LoginForm': loginform})
+        return render(request, "vendedores/login.html", {'LoginForm': loginform})
+
+# ----------------------------------------------------------------------------------------------------------------
+def AltaProductoForm(request):
+    if request.method == 'POST':
+        imagen = request.FILES.get('foto')
+        imagen_path = default_storage.save('fotos/productos'+imagen.name, imagen)  
+        nuevoProducto = AltaProducto({
+                                "marca":   request.POST['marca'],
+                                "rubro":   request.POST['rubro'],
+                                "nombre":  request.POST['nombre'],
+                                "precio":  request.POST['precio'],
+                                "stock":   request.POST['stock'],
+                                "detalle": request.POST['detalle'],
+                                "foto":    imagen_path
+                                })
+
+        if nuevoProducto.is_valid():
+            
+            data = nuevoProducto.cleaned_data
+            
+            produ = Producto(rubro=data['rubro'],
+                             marca=data['marca'],
+                             nombre=data['nombre'],
+                             precio=data['precio'],
+                             stock=data['stock'],
+                             detalle=data['detalle'],
+                             foto=imagen_path
+                            )
+            produ.save()
+            
+            return render(request, "productos/bienvenido.html",{"mensaje": f'Producto Registrado con exito'})  
+        else:
+            return render(request, "productos/bienvenido.html",{"mensaje": "Formulario Invalido"})  
+    else:
+        nuevoProducto = Producto()
+        marcas     = MarcaProd.objects.all()
+        rubros     = RubroProd.objects.all()
+        
+    return render(request, "productos/alta.html",{"Marc": marcas, "Rubr": rubros})  
+
+
+
 
 # def DetalleProductoForm(request):
 #     detalle = Producto.objects.get(request)

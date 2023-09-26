@@ -1,7 +1,23 @@
 from django import forms
 from AppFinal.models import Cliente, Vendedor, Producto, Provincia, MarcaProd, RubroProd
 
-# class AltaCliente(forms.Form):
+
+class AltaCliente(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ('nombre','apellido','dni','fnac','email','avatar','domicilio','provincia')
+        
+class AltaVendedor(forms.ModelForm):
+    class Meta:
+        model = Vendedor
+        fields = ('nombre','cuit','email','domicilio','provincia')
+        
+class AltaProducto(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ('rubro','marca','nombre','precio','stock','foto','detalle')
+ 
+ # class AltaCliente(forms.Form):
 #     nombre   = forms.CharField(required=True)
 #     apellido = forms.CharField(required=True)
 #     dni      = forms.IntegerField(required=True)
@@ -12,16 +28,8 @@ from AppFinal.models import Cliente, Vendedor, Producto, Provincia, MarcaProd, R
 #     domicilio= forms.CharField(required=True)
 #     provincia= forms.ModelChoiceField(queryset=Provincia.objects.all(), to_field_name=Cliente.provincia)
     
-            
-class AltaCliente(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = ('nombre','apellido','dni','fnac','email','avatar','domicilio','provincia')
-        
-class AltaVendedor(forms.ModelForm):
-    class Meta:
-        model = Vendedor
-        fields = ('nombre','cuit','email','domicilio','provincia')
+
+ 
          
 # class AltaProveedor(forms.Form):
 #     nombre   = forms.CharField(required=True)

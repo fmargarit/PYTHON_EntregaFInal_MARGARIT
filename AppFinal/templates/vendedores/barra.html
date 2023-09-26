@@ -16,7 +16,9 @@
                      
             <p style="font-family:monospace; color:blue; font-size:larger; font-style: italic;">Hola Vendedor {{user.username}}</p>
 
-            <a class="navbar-brand" href="{% url 'VendedoresAltaURLEditarURL' editaruser %}">Editar vendedores/fondo.html</a>  
+            <a class="navbar-brand" href="{% url 'VendedoresEditarURL' editarvendedor %}">Editar Vendedor</a>
+            
+            <a class="navbar-brand" href="{% url 'ProductosAltaURL' %}">Alta Productos</a>
 
             <a class="navbar-brand" href="{% url 'VendedoresLogoutURL' %}">Logout</a>
 

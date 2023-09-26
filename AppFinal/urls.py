@@ -22,30 +22,8 @@ urlpatterns = [
     path('vendedores/inicio/',     iniciovendedor,    name='VendedoresInicioURL'),
     path('vendedores/alta/',       AltaVendedorForm,  name='VendedoresAltaURL'),
     path('vendedores/login',       LoginVendedorForm, name='VendedoresLoginURL'),
+    path('vendedores/editar/<pk>', VendedorUpdateView.as_view(), name='VendedoresEditarURL'),
     path('vendedores/logout/',     LogoutView.as_view(template_name='vendedores/inicio.html'), name='VendedoresLogoutURL'),
 
-    
-#     path('clientes/busca/', BuscaClienteForm, name='ClientesBuscaURL'),
-#     path('clientes/result/', BuscaClienteResultForm, name='ClientesBuscaResultURL'),
-#     path('clientes/lista/', ListaClientesForm, name='ClientesListaURL'),
-    
-    
-#     path('proveedores/', proveedores, name='ProveedoresURL'),
-#     path('proveedores/alta/', AltaProveedorForm, name='ProveedorAltaURL'),
-#     path('proveedores/busca/', BuscaProveedorForm, name='ProveedoresBuscaURL'),
-#     path('proveedores/result/', BuscaProveedorResultForm, name='ProveedoresBuscaResultURL'),
-#     path('proveedores/lista/', ListaProveedoresForm, name='ProveedoresListaURL'),
-    
-    
-#     path('producto/', productos, name='ProductosURL'),
-#     path('producto/alta/', AltaProductoForm, name='ProductoAltaURL'),
-#     path('producto/busca/', BuscaProductoForm, name='ProductosBuscaURL'),
-      
-#     path('rubro/', rubros, name='RubrosURL'),
-#     path('rubro/alta/', AltaRubroForm, name='RubroAltaURL'),
-#     path('rubro/lista/', ListaRubrosForm, name='RubrosListaURL'),
-    
-#     path('pedidos/', pedidos, name='PedidosURL'),
-#     path('pedidos/alta/', AltaPedidoForm, name='PedidoAltaURL'),
-#     path('pedidos/lista/', ListaPedidosForm, name='PedidosListaURL'),
+    path('productos/alta/',        AltaProductoForm,  name='ProductosAltaURL'),
 ]
