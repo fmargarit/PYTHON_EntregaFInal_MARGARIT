@@ -12,7 +12,6 @@ urlpatterns = [
     
     path('clientes/alta/',       AltaClienteForm,  name='ClientesAltaURL'),
     path('clientes/login',       LoginClienteForm, name='ClientesLoginURL'),
-    #path('clientes/hola/<pk>',   Hola.as_view(template_name='clientes/hola.html'), name='HolaURL'),
     path('clientes/editar/<pk>', ClienteUpdateView.as_view(), name='ClientesEditarURL'),
     path('clientes/logout/',     LogoutView.as_view(template_name='inicio/inicio.html'), name='ClientesLogoutURL'),
 
@@ -26,4 +25,6 @@ urlpatterns = [
     path('vendedores/logout/',     LogoutView.as_view(template_name='vendedores/inicio.html'), name='VendedoresLogoutURL'),
 
     path('productos/alta/',        AltaProductoForm,  name='ProductosAltaURL'),
+    
+    path('productos/compra/',      CompraProductoForm,  name='ProductosCompraURL'),
 ]

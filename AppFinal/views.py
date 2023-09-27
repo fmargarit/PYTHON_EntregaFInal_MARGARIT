@@ -30,12 +30,21 @@ def iniciovendedor(request):
         return render(request, "vendedores/inicio.html", {"editarvendedor": dato.cuit})
     except:    
         return render(request, "vendedores/inicio.html",)
+    
+# ----------------------------------------------------------------------------------------------------------------
+def CompraProductoForm(request):
+    return render(request, "compra/fondo.html",)
 
 # ----------------------------------------------------------------------------------------------------------------
 def AltaClienteForm(request):
     if request.method == 'POST':
         avatar = request.FILES.get('avatar')
-        avatar_path = default_storage.save('fotos/clientes/'+avatar.name, avatar)
+        
+        if avatar is None:
+            avatar_path = 'fotos/clientes/emoji.jpg'
+        else:
+            avatar_path = default_storage.save('fotos/clientes/'+avatar.name, avatar)
+            
         nuevoCliente = AltaCliente({
                                 "nombre": request.POST['nombre'],
                                 "apellido": request.POST['apellido'],
@@ -46,7 +55,7 @@ def AltaClienteForm(request):
                                 "domicilio": request.POST['domicilio'],
                                 "provincia": request.POST['provincia'],
                                 })
-
+       
         nuevoUsuario = UserCreationForm({
                                 "username": request.POST["username"],
                                 "password1": request.POST["password1"],
@@ -74,10 +83,21 @@ def AltaClienteForm(request):
                             )
             client.save()
             return render(request, "clientes/bienvenido.html",{"mensaje1": f'Usuario Registrado con exito', "mensaje2": f'Ingrese al sistema'})  
-            
+        
+        elif nuevoUsuario.is_valid() == False:
+        
+            return render(request, "clientes/bienvenido.html",{"mensaje1": "Contraseñas Difieren"})  
+        
         else:
+            
+            print(nuevoCliente.is_valid())
+            print(nuevoUsuario.is_valid())
+            print(nuevoCliente.has_error('nombre'))
+            print(nuevoCliente.has_error('apellido'))
+            print(nuevoCliente.has_error('fnac'))
+            print(nuevoCliente.has_error('avatar'))
                         
-            return render(request, "clientes/bienvenido.html",{"mensaje": "Formulario Invalido"})  
+            return render(request, "clientes/bienvenido.html",{"mensaje1": "Formulario Invalido"})  
     
     else:
         nuevoCliente = Cliente()
@@ -100,15 +120,14 @@ def LoginClienteForm(request):
             editar = Cliente.objects.get(usuario=userok)
             
             if userok:
-                login(request, userok)
-                
+                login(request, userok)                
                 return render(request, "clientes/hola.html",{"mensaje": f'Bienvenido/a {editar.nombre}', "paraeditar": editar.dni})  
+            
             else:
                 return render(request, "clientes/hola.html",{"mensaje": f'Login Incorrecto'})  
         else:    
-                        
-            editar = Cliente.objects.get(usuario=userok)
-            return render(request, "clientes/bienvenido.html",{"mensaje": f'Algo Incorrecto', "saludo": editar.nombre})  
+                      
+            return render(request, "clientes/bienvenido.html",{"mensaje1": f'Algo Incorrecto', "mensaje2": f' Usuario y/o Contraseña Incorrectos'})  
     else:
         loginform = AuthenticationForm()
         return render(request, "clientes/login.html", {'LoginForm': loginform})
@@ -243,10 +262,8 @@ def LoginVendedorForm(request):
             print(loginform.has_error('username'))
             print(loginform.has_error('password'))
             print(loginform.is_valid())
-            
-            
-            editar = Vendedor.objects.get(usuario=userok)
-            return render(request, "vendedores/bienvenido.html",{"mensaje": f'Algo Incorrecto', "saludo": editar.nombre})  
+                                   
+            return render(request, "vendedores/bienvenido.html",{"mensaje1": f'Algo Incorrecto', "mensaje2": f' Usuario y/o Contraseña Incorrectos'})  
     else:
         loginform = AuthenticationForm()
         return render(request, "vendedores/login.html", {'LoginForm': loginform})
@@ -282,10 +299,7 @@ def AltaProductoForm(request):
             
             return render(request, "productos/bienvenido.html",{"mensaje": f'Producto Registrado con exito'})  
         else:
-            
-            # print(nuevoProducto.is_valid())
-            # print(nuevoProducto.has_error('nombre'))
-            
+                        
             return render(request, "productos/bienvenido.html",{"mensaje": "Formulario Invalido"})  
     else:
         nuevoProducto = Producto()
