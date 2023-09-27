@@ -9,8 +9,11 @@ Password:  Lourdes
 - Paginacion
 - Uso de imagenes
 - Video
-https://clipchamp.com/watch/nSmRlt9jqGS
+	https://clipchamp.com/watch/nSmRlt9jqGS
 
 - GitHub
+    https://github.com/fmargarit/PYTHON_EntregaFInal_MARGARIT
 - Testeos
+	Casos de Prueba Python 43875.pdf
+
 

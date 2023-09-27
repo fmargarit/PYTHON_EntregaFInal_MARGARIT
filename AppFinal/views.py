@@ -9,6 +9,7 @@ from AppFinal.models  import *
 from AppFinal.forms   import *
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LogoutView
 
 # Create your views here.
 # ----------------------------------------------------------------------------------------------------------------
@@ -17,7 +18,8 @@ def inicio(request):
         dato = Cliente.objects.get(usuario=request.user.id)
         return render(request, "inicio/inicio.html", {"editaruser": dato.dni, "url": dato.avatar.url})
     except:    
-        return render(request, "inicio/inicio.html")
+        logoutuser = LogoutView.as_view(template_name='inicio/inicio.html')
+        return logoutuser(request)
 
 # ----------------------------------------------------------------------------------------------------------------
 def contacto(request):
@@ -29,7 +31,8 @@ def iniciovendedor(request):
         dato = Vendedor.objects.get(usuario=request.user.id)
         return render(request, "vendedores/inicio.html", {"editarvendedor": dato.cuit})
     except:    
-        return render(request, "vendedores/inicio.html",)
+        logoutuser = LogoutView.as_view(template_name='vendedores/inicio.html')
+        return logoutuser(request)
     
 # ----------------------------------------------------------------------------------------------------------------
 def CompraProductoForm(request):

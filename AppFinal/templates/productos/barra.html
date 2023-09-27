@@ -17,6 +17,8 @@
 
                   <p style="font-family:monospace; color:blue; font-size:larger; font-style: italic;">Hola Usuario {{user.username}}</p>
                   
+                  <a class="navbar-brand" href="{% url 'InicioURL' %}">Inicio</a>
+
                   <a class="navbar-brand" href="{% url 'ProductosListaURL' 1 %}">Productos</a>
 
               {% else %}
